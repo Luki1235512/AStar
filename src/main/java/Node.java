@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Node extends JButton implements ActionListener {
+public class Node extends JButton {
 
     Node parent;
     int col;
@@ -23,26 +21,22 @@ public class Node extends JButton implements ActionListener {
 
         setBackground(Color.WHITE);
         setBackground(Color.BLACK);
-        addActionListener(this);
     }
 
     public void setAsStart() {
         setBackground(Color.BLUE);
-        setForeground(Color.WHITE);
         setText("Start");
         start = true;
     }
 
     public void setAsGoal() {
         setBackground(Color.YELLOW);
-        setForeground(Color.BLACK);
         setText("Goal");
         goal = true;
     }
 
     public void setAsSolid() {
         setBackground(Color.RED);
-        setForeground(Color.BLACK);
         solid = true;
     }
 
@@ -53,18 +47,12 @@ public class Node extends JButton implements ActionListener {
     public void setAsChecked() {
         if (!start && !goal) {
             setBackground(Color.GRAY);
-            setForeground(Color.BLACK);
         }
         checked = true;
     }
 
     public void setAsPath() {
-        setBackground(Color.GREEN);
+        setBackground(new Color(0, 102, 0));
         setForeground(Color.BLACK);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        setBackground(Color.GREEN);
     }
 }

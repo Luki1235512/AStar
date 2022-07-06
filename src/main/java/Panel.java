@@ -37,6 +37,7 @@ public class Panel extends JPanel {
 
         while (col < maxCol && row < maxRow) {
             node[col][row] = new Node(col, row);
+            node[col][row].setEnabled(false);
             this.add(node[col][row]);
 
             col++;
@@ -121,7 +122,7 @@ public class Panel extends JPanel {
 
     public void search() {
 
-        if (!goalReached) {
+        if (!goalReached && step < 1000) {
             int col = currentNode.col;
             int row = currentNode.row;
 
@@ -176,6 +177,8 @@ public class Panel extends JPanel {
                 trackThePath();
             }
         }
+
+        step++;
     }
 
     public void autoSearch() {
