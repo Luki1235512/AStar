@@ -19,6 +19,9 @@ public class KeyHandler implements KeyListener {
 
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_ENTER) {
+            panel.autoSearch();
+        }
+        if (code == KeyEvent.VK_SPACE) {
             panel.search();
         }
     }
