@@ -22,7 +22,7 @@ public class KeyHandler implements KeyListener {
             panel.autoSearch();
         }
         if (code == KeyEvent.VK_SPACE) {
-            panel.search();
+            panel.manualSearch();
         }
     }
 
