@@ -40,6 +40,12 @@ public class Node extends JButton implements ActionListener {
         goal = true;
     }
 
+    public void setAsSolid() {
+        setBackground(Color.RED);
+        setForeground(Color.BLACK);
+        solid = true;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         setBackground(Color.GREEN);
