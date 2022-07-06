@@ -173,6 +173,7 @@ public class Panel extends JPanel {
             currentNode = openList.get(bestNodeIndex);
             if (currentNode == goalNode) {
                 goalReached = true;
+                trackThePath();
             }
         }
     }
@@ -231,6 +232,7 @@ public class Panel extends JPanel {
             currentNode = openList.get(bestNodeIndex);
             if (currentNode == goalNode) {
                 goalReached = true;
+                trackThePath();
             }
         }
 
@@ -247,4 +249,18 @@ public class Panel extends JPanel {
             openList.add(node);
         }
     }
+
+    private void trackThePath() {
+
+        // Backtrack and draw the best path
+        Node current = goalNode;
+
+        while (current != startNode) {
+            current = current.parent;
+            if (current != startNode) {
+                current.setAsPath();
+            }
+        }
+    }
+
 }
