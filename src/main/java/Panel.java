@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Panel extends JPanel {
 
@@ -15,6 +16,11 @@ public class Panel extends JPanel {
     Node startNode;
     Node goalNode;
     Node currentNode;
+    ArrayList<Node> openList = new ArrayList<>();
+    ArrayList<Node> checkList = new ArrayList<>();
+
+    // OTHERS
+    boolean goalReached = false;
 
     public Panel() {
 
@@ -107,6 +113,75 @@ public class Panel extends JPanel {
         // DISPLAY THE COST ON NODE
         if (node != startNode && node != goalNode) {
             node.setText("<html>F: " + node.fCost + "<br>G: " + node.gCost + "<br>H: " + node.hCost + "</html>");
+        }
+    }
+
+    public void search() {
+
+        if (!goalReached) {
+            int col = currentNode.col;
+            int row = currentNode.row;
+
+            currentNode.setAsChecked();
+            checkList.add(currentNode);
+            openList.remove(currentNode);
+
+            // OPEN THE UP NODE
+            if (row - 1 >= 0) {
+                openNode(node[col][row - 1]);
+            }
+
+            // OPEN THE LEFT NODE
+            if (col - 1 >= 0) {
+                openNode(node[col - 1][row]);
+            }
+
+            // OPEN THE DOWN NODE
+            if (row + 1 >= 0) {
+                openNode(node[col][row + 1]);
+            }
+
+            //OPEN THE RIGHT NODE
+            if (col + 1 >= 0) {
+                openNode(node[col + 1][row]);
+            }
+
+            // FIND THE BEST NODE
+            int bestNodeIndex = 0;
+            int bestNodeFCost = Integer.MAX_VALUE;
+
+            for (int i = 0; i < openList.size(); i++) {
+
+                // Check if this node's F cost is better
+                if (openList.get(i).fCost < bestNodeFCost) {
+                    bestNodeIndex = i;
+                    bestNodeFCost = openList.get(i).fCost;
+                }
+
+                // If F cost is equal, check the G cost
+                else if (openList.get(i).fCost == bestNodeFCost) {
+                    if (openList.get(i).gCost < openList.get(bestNodeIndex).gCost) {
+                        bestNodeIndex = i;
+                    }
+                }
+            }
+
+            // After the loop, we get the best node which is our next step
+            currentNode = openList.get(bestNodeIndex);
+            if (currentNode == goalNode) {
+                goalReached = true;
+            }
+        }
+    }
+
+    private void openNode(Node node) {
+
+        if (!node.open && !node.checked && !node.solid) {
+
+            // If the node in not open yet, add it to the open list
+            node.setAsOpen();
+            node.parent = currentNode;
+            openList.add(node);
         }
     }
 }
