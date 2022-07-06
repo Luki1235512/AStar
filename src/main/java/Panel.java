@@ -27,6 +27,8 @@ public class Panel extends JPanel {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setLayout(new GridLayout(maxRow, maxCol));
+        this.addKeyListener(new KeyHandler(this));
+        this.setFocusable(true);
 
         // PLACE NODES
         int col = 0;
@@ -137,12 +139,12 @@ public class Panel extends JPanel {
             }
 
             // OPEN THE DOWN NODE
-            if (row + 1 >= 0) {
+            if (row + 1 < maxRow) {
                 openNode(node[col][row + 1]);
             }
 
             //OPEN THE RIGHT NODE
-            if (col + 1 >= 0) {
+            if (col + 1 < maxCol) {
                 openNode(node[col + 1][row]);
             }
 
