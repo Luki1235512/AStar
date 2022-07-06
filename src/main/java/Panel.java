@@ -55,6 +55,9 @@ public class Panel extends JPanel {
         setSolidNode(11, 7);
         setSolidNode(12, 7);
         setSolidNode(6, 1);
+
+        // SET COST
+        setCostOnNodes();
     }
 
     private void setStartNode(int col, int row) {
@@ -70,5 +73,40 @@ public class Panel extends JPanel {
 
     private void setSolidNode(int col, int row) {
         node[col][row].setAsSolid();
+    }
+
+    private void setCostOnNodes() {
+        int col = 0;
+        int row = 0;
+
+        while (col < maxCol && row < maxRow) {
+            getCost(node[col][row]);
+            col++;
+            if (col == maxCol) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+    private void getCost(Node node) {
+
+        // GET G COST (Distance from the start node)
+        int xDistance = Math.abs(node.col - startNode.col);
+        int yDistance = Math.abs(node.row - startNode.row);
+        node.gCost = xDistance + yDistance;
+
+        // GET H COST (Distance from the goal node)
+        xDistance = Math.abs(node.col - goalNode.col);
+        yDistance = Math.abs(node.row - goalNode.row);
+        node.hCost = xDistance + yDistance;
+
+        // GET F COST (Total cost)
+        node.fCost = node.gCost + node.hCost;
+
+        // DISPLAY THE COST ON NODE
+        if (node != startNode && node != goalNode) {
+            node.setText("<html>F: " + node.fCost + "<br>G: " + node.gCost + "<br>H: " + node.hCost + "</html>");
+        }
     }
 }
